@@ -44,12 +44,13 @@ class DeliveryTests {
         $x("//*[contains(text(),'Успешно!')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
         $("[class='notification__content']").shouldHave(Condition.exactText("Встреча успешно запланирована на " + firstMeetingDate));
         $x("//input[@placeholder='Дата встречи']").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $x("//span[@class='button__text']").click();
-        $x("//button[contains(@class,'button')]").click();
         $x("//input[@placeholder='Дата встречи']").setValue(secondMeetingDate);
         $x("//span[@class='button__text']").click();
-        $x("//*[contains(text(),'Успешно!')]").shouldBe(Condition.visible, Duration.ofSeconds(15));
-        $("[class='notification__content']").shouldHave(Condition.exactText("Встреча успешно запланирована на " + secondMeetingDate));
+        $("[data-test-id='success-notification']").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $x("//span[contains(text(), 'Перепланировать')]").click();
+        $("[data-test-id='success-notification']").shouldHave(Condition.exactText("Успешно! Встреча успешно запланирована на " + secondMeetingDate),
+                Duration.ofSeconds(15));
+
 
     }
 }
